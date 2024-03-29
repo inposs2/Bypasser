@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Link Entry</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #ffffff;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .container {
+        text-align: center;
+    }
+    input[type="text"] {
+        width: 300px;
+        padding: 10px;
+        border: 2px solid #cccccc;
+        border-radius: 5px;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+    input[type="submit"] {
+        background-color: #007bff;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+    input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+    #loadingText {
+        color: red;
+        display: none;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Enter Test Link</h1>
+    <form id="testLinkForm">
+        <input type="text" id="testLinkInput" name="testlink" placeholder="Enter test link">
+        <br>
+        <input type="submit" value="Submit">
+        <p id="loadingText"></p>
+    </form>
+    <div id="resultMessage" style="display:none;">
+        <p>Bypassed! Just <a id="bypassLink" href="#">click here</a>.</p>
+    </div>
+</div>
+
+<script>
+    document.getElementById('testLinkForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        
+        // Disable the form elements while processing
+        document.getElementById('testLinkInput').disabled = true;
+        document.querySelector('input[type="submit"]').disabled = true;
+        
+        // Show loading message
+        document.getElementById('loadingText').style.display = 'inline';
+        
+        // Initialize loading dots
+        let dots = '';
+        const intervalId = setInterval(function() {
+            dots += '.';
+            document.getElementById('loadingText').innerText = 'Loading' + dots;
+            if (dots.length > 3) {
+                dots = '';
+            }
+        }, 500);
+        
+        // Simulate loading for 3 seconds
+        setTimeout(function() {
+            // Stop the loading animation
+            clearInterval(intervalId);
+            
+            // Enable form elements
+            document.getElementById('testLinkInput').disabled = false;
+            document.querySelector('input[type="submit"]').disabled = false;
+
+            // Hide loading message
+            document.getElementById('loadingText').style.display = 'none';
+
+            // Show result message
+            document.getElementById('resultMessage').style.display = 'block';
+
+            // Set bypass link
+            document.getElementById('bypassLink').setAttribute('href', 'roblox://');
+        }, 3000);
+    });
+</script>
+
+</body>
+</html>
