@@ -43,6 +43,10 @@
         color: red;
         display: none;
     }
+    #errorMessage {
+        color: red;
+        display: none;
+    }
 </style>
 </head>
 <body>
@@ -54,6 +58,7 @@
         <br>
         <input type="submit" value="Submit">
         <p id="loadingText"></p>
+        <p id="errorMessage"></p>
     </form>
     <div id="resultMessage" style="display:none;">
         <p>Bypassed! Just <a id="bypassLink" href="#">click here</a>.</p>
@@ -63,6 +68,18 @@
 <script>
     document.getElementById('testLinkForm').addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent the default form submission
+        
+        // Hide any previous error messages
+        document.getElementById('errorMessage').style.display = 'none';
+        
+        // Check link length
+        const linkValue = document.getElementById('testLinkInput').value.trim();
+        if (linkValue.length < 99) {
+            // Show error message
+            document.getElementById('errorMessage').innerText = 'Link must be at least 99 characters long.';
+            document.getElementById('errorMessage').style.display = 'block';
+            return; // Exit the function early if there's an error
+        }
         
         // Disable the form elements while processing
         document.getElementById('testLinkInput').disabled = true;
